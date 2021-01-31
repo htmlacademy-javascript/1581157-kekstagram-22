@@ -8,15 +8,12 @@ const getRandomNumber = function (min, max) {
     min = temp;
   }
 
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min; // Источник https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 }
-
-// Источник https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-
-getRandomNumber(24, 46);
 
 const isLengthFit = function (checkedLine, maxLength) {
-  return (String(checkedLine).length <= maxLength) ? true : false;
+  return checkedLine.length <= maxLength;
 }
 
-isLengthFit(23, 2);
+getRandomNumber(24, 46);
+isLengthFit(232, 4);
