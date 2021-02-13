@@ -15,7 +15,7 @@ const picturesListFragment = document.createDocumentFragment();
 createPictures.forEach(({
   url,
   likes,
-  comments
+  comments,
 }) => {
   const pictureElement = pictureTemplate.cloneNode(true);
   pictureElement.querySelector('.picture__img').src = url;

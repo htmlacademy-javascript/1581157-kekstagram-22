@@ -44,7 +44,7 @@ const createPhotosDescriptions = function () {
       avatar: 'img/avatar-' + getRandomNumber(1, 6) + '.svg',
       message: getRandomElement(MESSAGES),
       name: getRandomElement(NAMES),
-    }, ]
+    }],
   }
 };
 
