@@ -26,9 +26,14 @@ const getRandomElement = function (array) {
   return array[getRandomNumber(0, array.length - 1)]
 }
 
+const isEscEvent = (evt) => {
+  return evt.key === ('Escape' || 'Esc');
+};
+
 export {
   isLengthFit,
   getRandomNumber,
   randomNumbersList,
-  getRandomElement
+  getRandomElement,
+  isEscEvent
 };
