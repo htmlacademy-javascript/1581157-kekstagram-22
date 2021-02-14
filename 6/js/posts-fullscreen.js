@@ -42,31 +42,31 @@ const createBigPost = function (element) {
 
 const onEscDown = function (evt) {
   if (isEscEvent(evt)) {
-    closeBigPicture(evt);
+    closeBigPost(evt);
   }
 }
 
-const closeBigPicture = function (evt) {
+const closeBigPost = function (evt) {
   evt.preventDefault();
   bigPost.classList.add('hidden');
   socialCommentCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
-  closeBigPostButton.removeEventListener('click', closeBigPicture);
+  closeBigPostButton.removeEventListener('click', closeBigPost);
   document.removeEventListener('keydown', onEscDown);
 }
 
-const onPostClick = function () {
+const openBigPost = function () {
   for (let i = 0; i < postsElements.length; i++) {
     postsElements[i].addEventListener('click', (evt) => {
       evt.preventDefault();
       bigPost.classList.remove('hidden');
       socialCommentCount.classList.add('hidden');
       commentsLoader.classList.add('hidden');
-      closeBigPostButton.addEventListener('click', closeBigPicture);
+      closeBigPostButton.addEventListener('click', closeBigPost);
       document.addEventListener('keydown', onEscDown);
       createBigPost(postsArray[i]);
     });
   }
 };
 
-postsElements.addEventListener('click', onPostClick());
+openBigPost();
