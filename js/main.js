@@ -1,3 +1,4 @@
 import './util.js';
 import './create-posts.js';
-import './picture.js'
+import './posts.js'
+import './posts-fullscreen.js'

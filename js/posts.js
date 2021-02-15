@@ -2,17 +2,17 @@ import {
   createPosts
 } from './create-posts.js';
 
-const picturesList = document.querySelector('.pictures');
+const postsList = document.querySelector('.pictures');
 
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const createPictures = createPosts();
+const postsArray = createPosts(5);
 
-const picturesListFragment = document.createDocumentFragment();
+const postsListFragment = document.createDocumentFragment();
 
-createPictures.forEach(({
+postsArray.forEach(({
   url,
   likes,
   comments,
@@ -21,7 +21,12 @@ createPictures.forEach(({
   pictureElement.querySelector('.picture__img').src = url;
   pictureElement.querySelector('.picture__likes').textContent = likes;
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
-  picturesListFragment.appendChild(pictureElement);
+  postsListFragment.appendChild(pictureElement);
 });
 
-picturesList.appendChild(picturesListFragment);
+postsList.appendChild(postsListFragment);
+
+export {
+  postsArray,
+  postsList
+};
