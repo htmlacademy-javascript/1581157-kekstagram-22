@@ -1,3 +1,5 @@
+const htmlBody = document.querySelector('body');
+
 const isLengthFit = function (checkedLine, maxLength) {
   return checkedLine.length <= maxLength;
 }
@@ -35,5 +37,6 @@ export {
   getRandomNumber,
   randomNumbersList,
   getRandomElement,
-  isEscEvent
+  isEscEvent,
+  htmlBody
 };

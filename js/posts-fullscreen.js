@@ -4,10 +4,10 @@ import {
 } from './posts.js';
 
 import {
-  isEscEvent
+  isEscEvent,
+  htmlBody
 } from './util.js'
 
-const htmlBody = document.querySelector('body');
 const bigPost = document.querySelector('.big-picture');
 const postsElements = postsList.querySelectorAll('.picture');
 const socialComments = bigPost.querySelectorAll('.social__comment');
