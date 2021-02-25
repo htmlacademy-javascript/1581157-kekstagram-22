@@ -1,12 +1,9 @@
+/* global noUiSlider:readonly */
+
 import {
   htmlBody,
   isEscEvent
 } from './util.js'
-
-import {
-  noUiSlider
-} from './../nouislider/nouislider.js'
-
 
 const imageUpload = document.querySelector('.img-upload');
 const uploadFile = imageUpload.querySelector('#upload-file');
@@ -20,6 +17,12 @@ const imgUploadPreviewImage = imgUploadPreview.querySelector('img');
 const effectsRadio = imageUpload.querySelectorAll('.effects__radio');
 const effectLevelSlider = imageUpload.querySelector('.effect-level__slider');
 const effectLevelValue = imageUpload.querySelector('.effect-level__value');
+const chromeEffectFilter = imageUpload.querySelector('#effect-chrome');
+const sepiaEffectFilter = imageUpload.querySelector('#effect-sepia');
+const marvinEffectFilter = imageUpload.querySelector('#effect-marvin');
+const fobosEffectFilter = imageUpload.querySelector('#effect-phobos');
+const heatEffectFilter = imageUpload.querySelector('#effect-heat');
+const noneEffectFilter = imageUpload.querySelector('#effect-none');
 
 const onEscDown = function (evt) {
   if (isEscEvent(evt)) {
@@ -27,27 +30,57 @@ const onEscDown = function (evt) {
   }
 }
 
-const effectsChange = function () {
+const createEffectSlider = function () {
+  noUiSlider.create(effectLevelSlider, {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    start: 0,
+    step: 0.1,
+    connect: 'lower',
+  });
+
+  effectLevelSlider.noUiSlider.on('update', (_, handle, unencoded) => {
+    effectLevelValue.value = unencoded[handle];
+  });
+}
+
+const setEffectsValues = function (effectClass, minRange, maxRange, startRange, stepRange) {
+
+  imgUploadPreviewImage.classList.add(effectClass);
+  effectLevelSlider.noUiSlider.reset();
+
+  effectLevelSlider.noUiSlider.updateOptions({
+    range: {
+      min: minRange,
+      max: maxRange,
+    },
+    start: startRange,
+    step: stepRange,
+  })
+}
+
+const setImageEffects = function () {
+
   for (let i = 0; i < effectsRadio.length; i++) {
     effectsRadio[i].addEventListener('click', () => {
-      if (imageUpload.querySelector('#effect-none').checked) {
+
+      if (noneEffectFilter.checked) {
         effectLevelSlider.style.display = 'none';
+        effectLevelSlider.noUiSlider.reset();
       } else {
         effectLevelSlider.style.display = 'block';
       }
 
-      if (imageUpload.querySelector('#effect-chrome').checked) {
-        imgUploadPreviewImage.classList.add('effects__preview--chrome');
-        effectLevelSlider.noUiSlider.reset();
+      if (chromeEffectFilter.checked) {
+        const EFFECT_CLASS = 'effects__preview--chrome';
+        const MIN_RANGE = 0;
+        const MAX_RANGE = 1;
+        const START_RANGE = 0;
+        const STEP_RANGE = 0.1;
 
-        effectLevelSlider.noUiSlider.updateOptions({
-          range: {
-            min: 0,
-            max: 1,
-          },
-          start: 0,
-          step: 0.1,
-        })
+        setEffectsValues(EFFECT_CLASS, MIN_RANGE, MAX_RANGE, START_RANGE, STEP_RANGE);
 
         effectLevelSlider.noUiSlider.on('update', () => {
           imgUploadPreviewImage.style.filter = 'grayscale(' + effectLevelValue.value + ')';
@@ -57,18 +90,14 @@ const effectsChange = function () {
         imgUploadPreviewImage.classList.remove('effects__preview--chrome');
       }
 
-      if (imageUpload.querySelector('#effect-sepia').checked) {
-        imgUploadPreviewImage.classList.add('effects__preview--sepia');
-        effectLevelSlider.noUiSlider.reset();
+      if (sepiaEffectFilter.checked) {
+        const EFFECT_CLASS = 'effects__preview--sepia';
+        const MIN_RANGE = 0;
+        const MAX_RANGE = 1;
+        const START_RANGE = 0;
+        const STEP_RANGE = 0.1;
 
-        effectLevelSlider.noUiSlider.updateOptions({
-          range: {
-            min: 0,
-            max: 1,
-          },
-          start: 0,
-          step: 0.1,
-        })
+        setEffectsValues(EFFECT_CLASS, MIN_RANGE, MAX_RANGE, START_RANGE, STEP_RANGE);
 
         effectLevelSlider.noUiSlider.on('update', () => {
           imgUploadPreviewImage.style.filter = 'sepia(' + effectLevelValue.value + ')';
@@ -78,18 +107,14 @@ const effectsChange = function () {
         imgUploadPreviewImage.classList.remove('effects__preview--sepia');
       }
 
-      if (imageUpload.querySelector('#effect-marvin').checked) {
-        imgUploadPreviewImage.classList.add('effects__preview--marvin');
-        effectLevelSlider.noUiSlider.reset();
+      if (marvinEffectFilter.checked) {
+        const EFFECT_CLASS = 'effects__preview--marvin';
+        const MIN_RANGE = 0;
+        const MAX_RANGE = 100;
+        const START_RANGE = 0;
+        const STEP_RANGE = 1;
 
-        effectLevelSlider.noUiSlider.updateOptions({
-          range: {
-            min: 0,
-            max: 100,
-          },
-          start: 0,
-          step: 1,
-        });
+        setEffectsValues(EFFECT_CLASS, MIN_RANGE, MAX_RANGE, START_RANGE, STEP_RANGE);
 
         effectLevelSlider.noUiSlider.on('update', () => {
           imgUploadPreviewImage.style.filter = 'invert(' + effectLevelValue.value + '%)';
@@ -99,18 +124,14 @@ const effectsChange = function () {
         imgUploadPreviewImage.classList.remove('effects__preview--marvin');
       }
 
-      if (imageUpload.querySelector('#effect-phobos').checked) {
-        imgUploadPreviewImage.classList.add('effects__preview--phobos');
-        effectLevelSlider.noUiSlider.reset();
+      if (fobosEffectFilter.checked) {
+        const EFFECT_CLASS = 'effects__preview--phobos';
+        const MIN_RANGE = 0;
+        const MAX_RANGE = 3;
+        const START_RANGE = 0;
+        const STEP_RANGE = 0.1;
 
-        effectLevelSlider.noUiSlider.updateOptions({
-          range: {
-            min: 0,
-            max: 3,
-          },
-          start: 0,
-          step: 0.1,
-        });
+        setEffectsValues(EFFECT_CLASS, MIN_RANGE, MAX_RANGE, START_RANGE, STEP_RANGE);
 
         effectLevelSlider.noUiSlider.on('update', () => {
           imgUploadPreviewImage.style.filter = 'blur(' + effectLevelValue.value + 'px)';
@@ -120,38 +141,24 @@ const effectsChange = function () {
         imgUploadPreviewImage.classList.remove('effects__preview--phobos');
       }
 
-      if (imageUpload.querySelector('#effect-heat').checked) {
-        imgUploadPreviewImage.classList.add('effects__preview--heat');
-        effectLevelSlider.noUiSlider.reset();
+      if (heatEffectFilter.checked) {
+        const EFFECT_CLASS = 'effects__preview--heat';
+        const MIN_RANGE = 1;
+        const MAX_RANGE = 3;
+        const START_RANGE = 0;
+        const STEP_RANGE = 0.1;
 
-        effectLevelSlider.noUiSlider.updateOptions({
-          range: {
-            min: 1,
-            max: 3,
-          },
-          start: 0,
-          step: 0.1,
-        });
+        setEffectsValues(EFFECT_CLASS, MIN_RANGE, MAX_RANGE, START_RANGE, STEP_RANGE);
 
         effectLevelSlider.noUiSlider.on('update', () => {
           imgUploadPreviewImage.style.filter = 'brightness(' + effectLevelValue.value + ')';
         });
-
       } else {
         imgUploadPreviewImage.classList.remove('effects__preview--heat');
       }
     })
   }
 };
-
-uploadFile.addEventListener('change', () => {
-  imageEditing.classList.remove('hidden');
-  htmlBody.classList.add('modal-open');
-  uploadClose.addEventListener('click', closeimageEditing);
-  document.addEventListener('keydown', onEscDown);
-  effectSlider();
-  effectsChange();
-})
 
 const closeimageEditing = function (evt) {
   evt.preventDefault();
@@ -166,6 +173,15 @@ const addTransformScale = function (element) {
   const transofrmScaleValue = scaleControl.value / 100;
   element.style.transform = 'scale(' + transofrmScaleValue + ')';
 }
+
+uploadFile.addEventListener('change', () => {
+  imageEditing.classList.remove('hidden');
+  htmlBody.classList.add('modal-open');
+  uploadClose.addEventListener('click', closeimageEditing);
+  document.addEventListener('keydown', onEscDown);
+  createEffectSlider();
+  setImageEffects();
+})
 
 scaleControlSmaller.addEventListener('click', (evt) => {
   evt.preventDefault();
@@ -188,19 +204,3 @@ scaleControlBigger.addEventListener('click', (evt) => {
     scaleControl.value += '%';
   }
 })
-
-const effectSlider = function () {
-  noUiSlider.create(effectLevelSlider, {
-    range: {
-      min: 0,
-      max: 1,
-    },
-    start: 0,
-    step: 0.1,
-    connect: 'lower',
-  });
-
-  effectLevelSlider.noUiSlider.on('update', (_, handle, unencoded) => {
-    effectLevelValue.value = unencoded[handle];
-  });
-}
