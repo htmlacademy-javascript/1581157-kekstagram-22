@@ -73,3 +73,7 @@ const openBigPost = function () {
 };
 
 openBigPost();
+
+export {
+  onEscDown
+}

@@ -29,7 +29,7 @@ const getRandomElement = function (array) {
 }
 
 const isEscEvent = (evt) => {
-  return evt.key === ('Escape' || 'Esc');
+  return evt.keyCode === 27;
 };
 
 export {
