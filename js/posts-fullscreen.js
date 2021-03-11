@@ -67,9 +67,11 @@ const showHiddenComments = function (evt) {
     commentsLoader.classList.remove('hidden');
   }
 
-  for (let i = 0; i < maxHiddenCommentIndex; i++) {
-    hiddenComments[i].classList.remove('hidden');
-  }
+  hiddenComments.forEach((comment, i) => {
+    if (i < maxHiddenCommentIndex) {
+      comment.classList.remove('hidden');
+    }
+  })
 }
 
 const onEscDown = function (evt) {

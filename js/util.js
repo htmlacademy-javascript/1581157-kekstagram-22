@@ -1,4 +1,5 @@
 const htmlBody = document.querySelector('body');
+const POPUP_SHOW_TIME = 4000;
 
 const isLengthFit = function (checkedLine, maxLength) {
   return checkedLine.length <= maxLength;
@@ -33,7 +34,6 @@ const isEscEvent = (evt) => {
 };
 
 const showAlertPopup = (message) => {
-  const POPUP_SHOW_TIME = 4000;
   const popupContainer = document.createElement('div');
   popupContainer.style.zIndex = 100;
   popupContainer.style.position = 'absolute';

@@ -6,10 +6,13 @@ import {
 } from './util.js'
 
 import {
-  showSuccessPopup,
-  showErrorPopup,
   sendData
 } from './api.js'
+
+import {
+  showSuccessPopup,
+  showErrorPopup
+} from './popups.js'
 
 import {
   hashtagInput,
