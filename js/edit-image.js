@@ -5,7 +5,21 @@ import {
   isEscEvent
 } from './util.js'
 
+import {
+  showSuccessPopup,
+  showErrorPopup,
+  sendData
+} from './api.js'
+
+import {
+  hashtagInput,
+  commentInput,
+  checkHashtagInputValues,
+  checkCommentInputValues
+} from './comment-checking.js'
+
 const imageUpload = document.querySelector('.img-upload');
+const imageUploadFrom = imageUpload.querySelector('.img-upload__form');
 const uploadFile = imageUpload.querySelector('#upload-file');
 const imageEditing = imageUpload.querySelector('.img-upload__overlay');
 const uploadClose = imageUpload.querySelector('#upload-cancel');
@@ -26,7 +40,13 @@ const noneEffectFilter = imageUpload.querySelector('#effect-none');
 
 const onEscDown = function (evt) {
   if (isEscEvent(evt)) {
-    closeimageEditing(evt);
+    if (document.querySelector('.success')) {
+      document.querySelector('.success').remove();
+    } else if (document.querySelector('.error')) {
+      document.querySelector('.error').remove();
+    } else if (evt.target !== commentInput && evt.target !== hashtagInput) {
+      closeimageEditing(evt);
+    }
   }
 }
 
@@ -119,7 +139,6 @@ const setImageEffects = function () {
         effectLevelSlider.noUiSlider.on('update', () => {
           imgUploadPreviewImage.style.filter = 'invert(' + effectLevelValue.value + '%)';
         });
-
       } else {
         imgUploadPreviewImage.classList.remove('effects__preview--marvin');
       }
@@ -167,11 +186,28 @@ const closeimageEditing = function (evt) {
   uploadClose.removeEventListener('click', closeimageEditing);
   document.removeEventListener('keydown', onEscDown);
   uploadFile.value = '';
+  clearFormData();
 }
 
 const addTransformScale = function (element) {
   const transofrmScaleValue = scaleControl.value / 100;
   element.style.transform = 'scale(' + transofrmScaleValue + ')';
+}
+
+const clearFormData = function () {
+  noneEffectFilter.checked = true;
+  effectLevelSlider.style.display = 'none';
+  effectLevelSlider.noUiSlider.reset();
+  hashtagInput.value = '';
+  commentInput.value = '';
+}
+
+const onFormSubmit = function () {
+  imageUploadFrom.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(showSuccessPopup, showErrorPopup, new FormData(evt.target));
+    clearFormData();
+  })
 }
 
 uploadFile.addEventListener('change', () => {
@@ -181,6 +217,9 @@ uploadFile.addEventListener('change', () => {
   document.addEventListener('keydown', onEscDown);
   createEffectSlider();
   setImageEffects();
+  checkCommentInputValues();
+  checkHashtagInputValues();
+  onFormSubmit();
 })
 
 scaleControlSmaller.addEventListener('click', (evt) => {
