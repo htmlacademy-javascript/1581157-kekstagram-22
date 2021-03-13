@@ -246,3 +246,7 @@ scaleControlBigger.addEventListener('click', (evt) => {
     scaleControl.value += '%';
   }
 })
+
+export {
+  imgUploadPreviewImage
+}
