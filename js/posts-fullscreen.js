@@ -1,6 +1,6 @@
 import {
-  postsList
-} from './posts.js';
+  picturesList
+} from './fill-posts.js';
 
 import {
   isEscEvent,
@@ -67,9 +67,11 @@ const showHiddenComments = function (evt) {
     commentsLoader.classList.remove('hidden');
   }
 
-  for (let i = 0; i < maxHiddenCommentIndex; i++) {
-    hiddenComments[i].classList.remove('hidden');
-  }
+  hiddenComments.forEach((comment, i) => {
+    if (i < maxHiddenCommentIndex) {
+      comment.classList.remove('hidden');
+    }
+  })
 }
 
 const onEscDown = function (evt) {
@@ -89,7 +91,7 @@ const closeBigPost = function (evt) {
 }
 
 const openBigPost = function (commentsArray) {
-  const postsElements = postsList.querySelectorAll('.picture');
+  const postsElements = picturesList.querySelectorAll('.picture');
 
   for (let i = 0; i < postsElements.length; i++) {
     postsElements[i].addEventListener('click', (evt) => {

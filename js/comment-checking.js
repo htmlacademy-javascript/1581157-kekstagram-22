@@ -14,8 +14,7 @@ const checkHashtagInputValues = function () {
 
     hashtagInput.setCustomValidity('');
 
-    for (let i = 0; i < hashtagsArray.length; i++) {
-      const hashtagText = hashtagsArray[i];
+    hashtagsArray.forEach(hashtagText => {
       const isLettersAndNumbers = inputPattern.test(hashtagText.slice(1));
       hashtagsSet.add(hashtagText.toLowerCase());
 
@@ -28,7 +27,7 @@ const checkHashtagInputValues = function () {
       } else if (!isLettersAndNumbers) {
         hashtagInput.setCustomValidity('Разрешены только буквы и цифры')
       }
-    }
+    });
 
     if (hashtagsArray.length > MAX_HASHTAGS_COUNT) {
       hashtagInput.setCustomValidity('Удалите ' + (hashtagsArray.length - MAX_HASHTAGS_COUNT) + ' хэштэга');

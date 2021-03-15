@@ -1,15 +1,11 @@
-import {
-  getData
-} from './api.js'
-
-const postsList = document.querySelector('.pictures');
+const picturesList = document.querySelector('.pictures');
 
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
 const fillPosts = function (postsArray) {
-  const postsListFragment = document.createDocumentFragment();
+  const picturesListFragment = document.createDocumentFragment();
 
   postsArray.forEach(({
     url,
@@ -20,14 +16,13 @@ const fillPosts = function (postsArray) {
     pictureElement.querySelector('.picture__img').src = url;
     pictureElement.querySelector('.picture__likes').textContent = likes;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
-    postsListFragment.appendChild(pictureElement);
+    picturesListFragment.appendChild(pictureElement);
   });
 
-  postsList.appendChild(postsListFragment);
+  picturesList.appendChild(picturesListFragment);
 }
 
-getData(fillPosts);
-
 export {
-  postsList
+  picturesList,
+  fillPosts
 };
